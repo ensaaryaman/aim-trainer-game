@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mavi Tonlarda Camsı Hero Tasarımı</title>
+  <title>ensar yaman</title>
   <style>
     * {
       margin: 0;
@@ -19,11 +19,9 @@
       font-family: sans-serif;
       overflow: hidden;
 
-      /* Açık mavi ana arka plan */
       background: linear-gradient(135deg, #dff3ff, #c7e3ff);
     }
 
-    /* Blur arka plan bulutları — tamamı mavi tonlarda */
     body::before {
       content: "";
       position: fixed;
@@ -37,19 +35,16 @@
       z-index: -1;
     }
 
-    /* Öndeki camsı panel */
     .hero-card {
       width: min(1120px, 90%);
       height: 520px;
 
-      /* Cam etkisi */
       background: rgba(255, 255, 255, 0.18);  /* çok hafif beyaz + mavi görünüm */
       border-radius: 32px;
       border: 1px solid rgba(255, 255, 255, 0.45);
       backdrop-filter: blur(22px) saturate(160%);
       -webkit-backdrop-filter: blur(22px) saturate(160%);
 
-      /* Cam parlaması */
       box-shadow:
         0 25px 60px rgba(0, 50, 100, 0.15),
         inset 0 0 30px rgba(255, 255, 255, 0.18);

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Siyah Camsı Panel + Magma Arkaplan</title>
 
   <style>
     * {
@@ -12,33 +12,33 @@
       box-sizing: border-box;
     }
 
+    /* MAGMA KIRMIZISI ARKA PLAN */
     body {
       min-height: 100vh;
+      background: radial-gradient(circle at center, #ff4b36, #8b0000);
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at center, #ff3b2f, #7a0000);
-      overflow: hidden;
-      padding: 40px; /* panel ile dış çerçeve arası boşluk */
+      padding: 40px; /* Panel ile dış çerçeve arası boşluk */
     }
 
-    /* Ön taraftaki siyah camsı panel */
+    /* CAMSI SİYAH ÜST PANEL */
     .glass-panel {
       width: 100%;
-      height: 85vh; /* attığın örnekteki gibi daha içeride */
-      border-radius: 14px;
+      height: 85vh;
+      border-radius: 20px;
 
-      /* Camsı siyah */
-      background: rgba(0, 0, 0, 0.35);
-      backdrop-filter: blur(18px) saturate(140%);
-      -webkit-backdrop-filter: blur(18px) saturate(140%);
+      /* CAM EFEKTİ - SİYAH CAM */
+      background: rgba(0, 0, 0, 0.25);     /* siyah ama şeffaf */
+      backdrop-filter: blur(22px) brightness(0.8) saturate(150%);
+      -webkit-backdrop-filter: blur(22px) brightness(0.8) saturate(150%);
 
-      border: 2px solid rgba(255, 255, 255, 0.18);
+      border: 2px solid rgba(255, 255, 255, 0.15);
 
-      /* İç çerçeve efekti */
+      /* Cam görünümünü güçlendiren iç ve dış gölgeler */
       box-shadow:
-        inset 0 0 0 3px rgba(255, 255, 255, 0.05),
-        0 0 35px rgba(0, 0, 0, 0.5);
+        inset 0 0 30px rgba(255, 255, 255, 0.08),
+        0 20px 40px rgba(0, 0, 0, 0.5);
     }
   </style>
 </head>

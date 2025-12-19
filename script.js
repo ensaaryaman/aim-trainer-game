@@ -1,12 +1,11 @@
-// ==================== SES SİSTEMİ ====================
-class SoundManager {
-    constructor() {
-        this.enabled = true;
-        this.audioContext = null;
-        this.initialized = false;
-    }
+function SoundManager() {
+    // özellikler
+    this.enabled = true;
+    this.audioContext = null;
+    this.initialized = false;
 
-    init() {
+    // başlatma
+    this.init = function () {
         if (this.initialized) return;
         try {
             this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -14,13 +13,16 @@ class SoundManager {
         } catch (e) {
             console.log('Audio not supported');
         }
-    }
+    };
 
-    playTone(frequency, duration, type = 'sine', volume = 0.3) {
+    // ses oluşturma
+    this.playTone = function (frequency, duration, type, volume) {
+        if (type === undefined) type = 'sine';
+        if (volume === undefined) volume = 0.3;
         if (!this.enabled || !this.audioContext) return;
         
-        const oscillator = this.audioContext.createOscillator();
-        const gainNode = this.audioContext.createGain();
+        var oscillator = this.audioContext.createOscillator();
+        var gainNode = this.audioContext.createGain();
         
         oscillator.connect(gainNode);
         gainNode.connect(this.audioContext.destination);
@@ -29,54 +31,81 @@ class SoundManager {
         oscillator.type = type;
         
         gainNode.gain.setValueAtTime(volume, this.audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration);
+        gainNode.gain.exponentialRampToValueAtTime(
+            0.01,
+            this.audioContext.currentTime + duration
+        );
         
         oscillator.start(this.audioContext.currentTime);
         oscillator.stop(this.audioContext.currentTime + duration);
-    }
+    };
 
-    hit(combo = 1) {
-        const baseFreq = 600 + (combo * 50);
+    // vuruş sesi
+    this.hit = function (combo) {
+        if (combo === undefined) combo = 1;
+        var baseFreq = 600 + (combo * 50);
         this.playTone(baseFreq, 0.1, 'sine', 0.25);
-        setTimeout(() => this.playTone(baseFreq * 1.5, 0.1, 'sine', 0.15), 50);
-    }
+        var self = this;
+        setTimeout(function () {
+            self.playTone(baseFreq * 1.5, 0.1, 'sine', 0.15);
+        }, 50);
+    };
 
-    miss() {
+    // kaçırma sesi
+    this.miss = function () {
         this.playTone(200, 0.2, 'sawtooth', 0.15);
-    }
+    };
 
-    comboBreak() {
+    // kombo bozuldu
+    this.comboBreak = function () {
         this.playTone(150, 0.3, 'square', 0.1);
-    }
+    };
 
-    countdown() {
+    // geri sayım sesi
+    this.countdown = function () {
         this.playTone(440, 0.15, 'sine', 0.2);
-    }
+    };
 
-    countdownGo() {
+    // başlangıç sesi
+    this.countdownGo = function () {
         this.playTone(880, 0.3, 'sine', 0.25);
-    }
+    };
 
-    gameOver() {
+    // oyun sonu sesi
+    this.gameOver = function () {
+        var self = this;
         this.playTone(400, 0.2, 'sine', 0.2);
-        setTimeout(() => this.playTone(350, 0.2, 'sine', 0.2), 150);
-        setTimeout(() => this.playTone(300, 0.4, 'sine', 0.2), 300);
-    }
+        setTimeout(function () {
+            self.playTone(350, 0.2, 'sine', 0.2);
+        }, 150);
+        setTimeout(function () {
+            self.playTone(300, 0.4, 'sine', 0.2);
+        }, 300);
+    };
 
-    newRecord() {
-        const notes = [523, 659, 784, 1047];
-        notes.forEach((freq, i) => {
-            setTimeout(() => this.playTone(freq, 0.2, 'sine', 0.25), i * 100);
-        });
-    }
+    // rekor sesi
+    this.newRecord = function () {
+        var self = this;
+        var notes = [523, 659, 784, 1047];
+        for (var i = 0; i < notes.length; i++) {
+            (function (freq, delay) {
+                setTimeout(function () {
+                    self.playTone(freq, 0.2, 'sine', 0.25);
+                }, delay);
+            })(notes[i], i * 100);
+        }
+    };
 
-    toggle() {
+    // ses aç/kapat
+    this.toggle = function () {
         this.enabled = !this.enabled;
         return this.enabled;
-    }
+    };
 }
 
-const soundManager = new SoundManager();
+// nesne oluşturma
+var soundManager = new SoundManager();
+
 
 // ==================== OYUN DEĞİŞKENLERİ ====================
 let score = 0;

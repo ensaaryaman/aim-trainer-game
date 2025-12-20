@@ -2,7 +2,9 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Aim Trainer Pro</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
     <link rel="stylesheet" href="style.css">
@@ -50,27 +52,31 @@
         </div>
 
         <div class="controls">
-            <div class="select-group">
-                <label for="difficulty">Zorluk:</label>
-                <select id="difficulty">
-                    <option value="easy">Kolay</option>
-                    <option value="medium" selected>Orta</option>
-                    <option value="hard">Zor</option>
-                    <option value="extreme">Ekstrem</option>
-                </select>
+            <div class="select-row">
+                <div class="select-group">
+                    <label for="difficulty">Zorluk:</label>
+                    <select id="difficulty">
+                        <option value="easy">Kolay</option>
+                        <option value="medium" selected>Orta</option>
+                        <option value="hard">Zor</option>
+                        <option value="extreme">Ekstrem</option>
+                    </select>
+                </div>
+                <div class="select-group">
+                    <label for="gameMode">Mod:</label>
+                    <select id="gameMode">
+                        <option value="classic">Klasik</option>
+                        <option value="moving">Hareketli</option>
+                        <option value="chaos">Kaos</option>
+                    </select>
+                </div>
             </div>
-            <div class="select-group">
-                <label for="gameMode">Mod:</label>
-                <select id="gameMode">
-                    <option value="classic">Klasik</option>
-                    <option value="moving">Hareketli</option>
-                    <option value="chaos">Kaos</option>
-                </select>
+            <div class="button-row">
+                <button class="btn-start" id="startBtn" onclick="startGame()">Başlat</button>
+                <button class="btn-reset" onclick="resetGame()">Sıfırla</button>
+                <button class="btn-scores" onclick="showLeaderboard()">🏆</button>
+                <button class="btn-sound" id="soundBtn" onclick="toggleSound()">🔊</button>
             </div>
-            <button class="btn-start" id="startBtn" onclick="startGame()">Başlat</button>
-            <button class="btn-reset" onclick="resetGame()">Sıfırla</button>
-            <button class="btn-scores" onclick="showLeaderboard()">🏆 Skorlar</button>
-            <button class="btn-sound" id="soundBtn" onclick="toggleSound()">🔊</button>
         </div>
     </div>
 

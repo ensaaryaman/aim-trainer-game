@@ -2,14 +2,20 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     min-height: 100vh;
+    min-height: 100dvh;
     color: #fff;
     overflow: hidden;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
 }
 
 .container {
@@ -18,6 +24,7 @@ body {
     align-items: center;
     padding: 15px;
     height: 100vh;
+    height: 100dvh;
 }
 
 h1 {
@@ -31,7 +38,7 @@ h1 {
 
 .stats {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     margin-bottom: 10px;
     font-size: 1rem;
     flex-wrap: wrap;
@@ -43,19 +50,19 @@ h1 {
     flex-direction: column;
     align-items: center;
     background: rgba(255, 255, 255, 0.1);
-    padding: 8px 20px;
+    padding: 8px 15px;
     border-radius: 10px;
-    min-width: 80px;
+    min-width: 70px;
 }
 
 .stat-value {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: bold;
     color: #feca57;
 }
 
 .stat-label {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: #aaa;
 }
 
@@ -63,7 +70,7 @@ h1 {
     position: absolute;
     top: 10px;
     right: 10px;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: bold;
     color: #ff6b6b;
     text-shadow: 0 0 10px rgba(255, 107, 107, 0.8);
@@ -84,9 +91,9 @@ h1 {
 
 .multiplier {
     position: absolute;
-    top: 50px;
+    top: 45px;
     right: 10px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #feca57;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -106,6 +113,7 @@ h1 {
     cursor: crosshair;
     overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    touch-action: none;
 }
 
 .game-area::before {
@@ -116,6 +124,7 @@ h1 {
     right: 0;
     height: 1px;
     background: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
 }
 
 .game-area::after {
@@ -126,6 +135,7 @@ h1 {
     bottom: 0;
     width: 1px;
     background: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
 }
 
 .target {
@@ -137,6 +147,7 @@ h1 {
     background: radial-gradient(circle at 30% 30%, #ff6b6b, #ee5a5a, #c0392b);
     box-shadow: 0 0 20px rgba(255, 107, 107, 0.6),
                 inset 0 0 20px rgba(255, 255, 255, 0.2);
+    touch-action: none;
 }
 
 .target::before {
@@ -149,6 +160,7 @@ h1 {
     height: 30%;
     background: radial-gradient(circle, #fff, #ffcccb);
     border-radius: 50%;
+    pointer-events: none;
 }
 
 .target::after {
@@ -161,6 +173,7 @@ h1 {
     height: 60%;
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 50%;
+    pointer-events: none;
 }
 
 .target:hover {
@@ -178,12 +191,27 @@ h1 {
 }
 
 .controls {
-    margin-top: 15px;
+    margin-top: 12px;
     display: flex;
-    gap: 12px;
+    flex-direction: column;
+    gap: 10px;
     align-items: center;
-    flex-wrap: wrap;
+    width: 100%;
+    max-width: 850px;
+}
+
+.select-row {
+    display: flex;
+    gap: 15px;
     justify-content: center;
+    flex-wrap: wrap;
+}
+
+.button-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 button {
@@ -194,6 +222,7 @@ button {
     cursor: pointer;
     transition: all 0.3s ease;
     font-weight: bold;
+    touch-action: manipulation;
 }
 
 .btn-start {
@@ -243,7 +272,7 @@ button {
 
 .select-group {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     align-items: center;
 }
 
@@ -275,16 +304,18 @@ button {
     align-items: center;
     border-radius: 12px;
     z-index: 10;
+    padding: 20px;
+    text-align: center;
 }
 
 .overlay h2 {
-    font-size: 2.2rem;
+    font-size: 2rem;
     margin-bottom: 15px;
     color: #feca57;
 }
 
 .overlay p {
-    font-size: 1.1rem;
+    font-size: 1rem;
     margin-bottom: 8px;
     color: #ddd;
 }
@@ -295,7 +326,7 @@ button {
 }
 
 .final-stats .big-stat {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: #ff6b6b;
     font-weight: bold;
 }
@@ -328,7 +359,7 @@ button {
 
 .score-popup {
     position: absolute;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: bold;
     color: #00b894;
     pointer-events: none;
@@ -339,7 +370,7 @@ button {
 
 .score-popup.combo {
     color: #ff6b6b;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     text-shadow: 0 0 15px rgba(255, 107, 107, 0.8);
 }
 
@@ -349,7 +380,7 @@ button {
 }
 
 .countdown {
-    font-size: 5rem;
+    font-size: 4rem;
     color: #feca57;
     animation: pulse 1s ease-in-out;
 }
@@ -371,6 +402,7 @@ button {
     justify-content: center;
     align-items: center;
     z-index: 100;
+    padding: 20px;
 }
 
 .modal.active {
@@ -379,11 +411,11 @@ button {
 
 .modal-content {
     background: linear-gradient(145deg, #1a1a2e, #16213e);
-    padding: 30px;
+    padding: 25px;
     border-radius: 15px;
     border: 2px solid #333;
-    max-width: 500px;
-    width: 90%;
+    max-width: 450px;
+    width: 100%;
     max-height: 80vh;
     overflow-y: auto;
 }
@@ -392,6 +424,7 @@ button {
     color: #feca57;
     margin-bottom: 20px;
     text-align: center;
+    font-size: 1.5rem;
 }
 
 .leaderboard-list {
@@ -402,7 +435,7 @@ button {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 15px;
+    padding: 10px 12px;
     margin-bottom: 8px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
@@ -436,17 +469,17 @@ button {
 
 .score-info {
     flex: 1;
-    margin-left: 15px;
+    margin-left: 12px;
 }
 
 .score-info .score-value {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
     color: #ff6b6b;
 }
 
 .score-info .score-details {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: #888;
 }
 
@@ -478,8 +511,8 @@ button {
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
-    width: 200px;
-    height: 6px;
+    width: 150px;
+    height: 5px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 3px;
     overflow: hidden;
@@ -505,9 +538,9 @@ button {
     left: 10px;
     background: linear-gradient(135deg, #ffd700, #ffaa00);
     color: #333;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.85rem;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.75rem;
     font-weight: bold;
     z-index: 5;
 }
@@ -523,4 +556,332 @@ button {
 @keyframes particleFade {
     0% { transform: scale(1); opacity: 1; }
     100% { transform: scale(0); opacity: 0; }
+}
+
+/* ==================== TABLET (768px ve altı) ==================== */
+@media (max-width: 900px) {
+    .container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+        margin-bottom: 5px;
+    }
+
+    .stats {
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .stat {
+        padding: 6px 12px;
+        min-width: 60px;
+    }
+
+    .stat-value {
+        font-size: 1.2rem;
+    }
+
+    .stat-label {
+        font-size: 0.65rem;
+    }
+
+    .game-area {
+        width: calc(100vw - 20px);
+        height: calc(100vw * 0.6);
+        max-width: 750px;
+        max-height: 450px;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+    }
+
+    .select-group select {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+}
+
+/* ==================== MOBİL (480px ve altı) ==================== */
+@media (max-width: 480px) {
+    .container {
+        padding: 8px;
+        justify-content: flex-start;
+    }
+
+    h1 {
+        font-size: 1.4rem;
+        margin-bottom: 5px;
+    }
+
+    .stats {
+        gap: 5px;
+        margin-bottom: 6px;
+    }
+
+    .stat {
+        padding: 5px 8px;
+        min-width: 50px;
+        border-radius: 8px;
+    }
+
+    .stat-value {
+        font-size: 1rem;
+    }
+
+    .stat-label {
+        font-size: 0.6rem;
+    }
+
+    .game-area {
+        width: calc(100vw - 16px);
+        height: calc((100vw - 16px) * 0.7);
+        max-height: 55vh;
+        border-radius: 12px;
+        border-width: 2px;
+    }
+
+    .high-score-badge {
+        font-size: 0.65rem;
+        padding: 3px 8px;
+        top: 5px;
+        left: 5px;
+    }
+
+    .combo-display {
+        font-size: 1rem;
+        top: 5px;
+        right: 5px;
+    }
+
+    .multiplier {
+        font-size: 0.75rem;
+        top: 30px;
+        right: 5px;
+    }
+
+    .combo-bar-container {
+        width: 100px;
+        height: 4px;
+        bottom: 5px;
+    }
+
+    .overlay {
+        padding: 15px;
+    }
+
+    .overlay h2 {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+    }
+
+    .overlay p {
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+    }
+
+    .final-stats .big-stat {
+        font-size: 2rem;
+    }
+
+    .countdown {
+        font-size: 3rem;
+    }
+
+    .controls {
+        margin-top: 8px;
+        gap: 8px;
+    }
+
+    .select-row {
+        gap: 10px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .select-group {
+        gap: 5px;
+    }
+
+    .select-group label {
+        font-size: 0.8rem;
+    }
+
+    .select-group select {
+        padding: 8px;
+        font-size: 0.85rem;
+    }
+
+    .button-row {
+        gap: 8px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    button {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+    }
+
+    .btn-scores, .btn-sound {
+        padding: 10px 14px;
+    }
+
+    .score-popup {
+        font-size: 1rem;
+    }
+
+    .score-popup.combo {
+        font-size: 1.2rem;
+    }
+
+    .modal-content {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    .modal-content h2 {
+        font-size: 1.3rem;
+    }
+
+    .score-info .score-value {
+        font-size: 1rem;
+    }
+
+    .score-info .score-details {
+        font-size: 0.65rem;
+    }
+}
+
+/* ==================== KÜÇÜK MOBİL (360px ve altı) ==================== */
+@media (max-width: 360px) {
+    h1 {
+        font-size: 1.2rem;
+    }
+
+    .stat {
+        padding: 4px 6px;
+        min-width: 45px;
+    }
+
+    .stat-value {
+        font-size: 0.9rem;
+    }
+
+    .stat-label {
+        font-size: 0.55rem;
+    }
+
+    .game-area {
+        height: calc((100vw - 16px) * 0.75);
+    }
+
+    .select-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .select-group {
+        width: 100%;
+        justify-content: center;
+    }
+
+    button {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+    }
+
+    .overlay h2 {
+        font-size: 1.2rem;
+    }
+
+    .overlay p {
+        font-size: 0.75rem;
+    }
+}
+
+/* ==================== LANDSCAPE MOBİL ==================== */
+@media (max-height: 500px) and (orientation: landscape) {
+    .container {
+        padding: 5px 10px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    h1 {
+        width: 100%;
+        font-size: 1.2rem;
+        margin-bottom: 3px;
+        text-align: center;
+    }
+
+    .stats {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        flex-direction: column;
+        gap: 5px;
+        margin: 0;
+    }
+
+    .stat {
+        padding: 4px 8px;
+        min-width: 55px;
+    }
+
+    .stat-value {
+        font-size: 0.9rem;
+    }
+
+    .stat-label {
+        font-size: 0.55rem;
+    }
+
+    .game-area {
+        width: calc(100vh - 60px);
+        height: calc(100vh - 80px);
+        max-width: 70vw;
+    }
+
+    .controls {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        flex-direction: column;
+        gap: 5px;
+        margin: 0;
+        width: auto;
+    }
+
+    .select-row {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .button-row {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    button {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+
+    .select-group select {
+        padding: 5px 8px;
+        font-size: 0.8rem;
+    }
+
+    .select-group label {
+        font-size: 0.7rem;
+    }
 }

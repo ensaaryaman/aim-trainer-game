@@ -78,18 +78,6 @@ class SoundManager {
 
 const soundManager = new SoundManager();
 
-// ==================== MOBİL TESPİTİ ====================
-function isMobile() {
-    return window.innerWidth <= 768 || 'ontouchstart' in window;
-}
-
-function getScaleFactor() {
-    const gameArea = document.getElementById('gameArea');
-    const baseWidth = 850;
-    const currentWidth = gameArea.offsetWidth;
-    return currentWidth / baseWidth;
-}
-
 // ==================== OYUN DEĞİŞKENLERİ ====================
 let score = 0;
 let timeLeft = 30;
@@ -113,33 +101,13 @@ const COMBO_TIMEOUT = 2000;
 // Hareket sistemi
 let moveInterval = null;
 
-// Zorluk ayarları (mobil için dinamik olarak ölçeklenecek)
-const baseDifficultySettings = {
+// Zorluk ayarları
+const difficultySettings = {
     easy: { size: 70, timeout: 2500, spawnDelay: 1200, moveSpeed: 1 },
     medium: { size: 55, timeout: 1800, spawnDelay: 900, moveSpeed: 2 },
     hard: { size: 40, timeout: 1200, spawnDelay: 600, moveSpeed: 3 },
     extreme: { size: 30, timeout: 800, spawnDelay: 400, moveSpeed: 4 }
 };
-
-// Dinamik zorluk ayarlarını al
-function getDifficultySettings() {
-    const scale = getScaleFactor();
-    const mobile = isMobile();
-    const settings = {};
-    
-    for (const [key, value] of Object.entries(baseDifficultySettings)) {
-        settings[key] = {
-            // Mobilde hedefler biraz daha büyük olsun
-            size: Math.max(25, Math.round(value.size * scale * (mobile ? 1.15 : 1))),
-            timeout: value.timeout,
-            spawnDelay: value.spawnDelay,
-            // Mobilde hareket biraz daha yavaş
-            moveSpeed: value.moveSpeed * scale * (mobile ? 0.8 : 1)
-        };
-    }
-    
-    return settings;
-}
 
 // DOM elementleri
 const gameArea = document.getElementById('gameArea');
@@ -273,16 +241,13 @@ function createParticles(x, y) {
     const colors = ['#ff6b6b', '#feca57', '#ff9ff3', '#54a0ff', '#5f27cd'];
     const rect = gameArea.getBoundingClientRect();
     
-    // Mobilde daha az parçacık
-    const particleCount = isMobile() ? 5 : 8;
-    
-    for (let i = 0; i < particleCount; i++) {
+    for (let i = 0; i < 8; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
         
-        const size = Math.random() * 6 + 3;
-        const angle = (Math.PI * 2 * i) / particleCount;
-        const velocity = Math.random() * 40 + 20;
+        const size = Math.random() * 8 + 4;
+        const angle = (Math.PI * 2 * i) / 8;
+        const velocity = Math.random() * 50 + 30;
         const color = colors[Math.floor(Math.random() * colors.length)];
         
         particle.style.width = size + 'px';
@@ -300,11 +265,11 @@ function createParticles(x, y) {
             { transform: 'translate(0, 0) scale(1)', opacity: 1 },
             { transform: `translate(${destX}px, ${destY}px) scale(0)`, opacity: 0 }
         ], {
-            duration: 500,
+            duration: 600,
             easing: 'ease-out'
         });
         
-        setTimeout(() => particle.remove(), 500);
+        setTimeout(() => particle.remove(), 600);
     }
 }
 
@@ -360,17 +325,13 @@ function beginGame() {
     }, 1000);
     
     spawnTarget();
-    
-    // Mouse ve Touch olayları
     gameArea.onclick = handleMiss;
-    gameArea.ontouchstart = handleTouchMiss;
 }
 
 // ==================== HEDEF SİSTEMİ ====================
 function spawnTarget() {
     if (!gameActive) return;
     
-    const difficultySettings = getDifficultySettings();
     const settings = difficultySettings[difficultySelect.value];
     const mode = gameModeSelect.value;
     const size = settings.size;
@@ -394,25 +355,16 @@ function spawnTarget() {
     
     const padding = size;
     const maxX = gameArea.offsetWidth - padding;
-    const maxY = gameArea.offsetHeight - padding - 20;
+    const maxY = gameArea.offsetHeight - padding - 30;
     let x = padding + Math.random() * (maxX - padding);
     let y = padding + Math.random() * (maxY - padding);
     
     target.style.left = x + 'px';
     target.style.top = y + 'px';
     
-    // Mouse click
     target.onclick = (e) => {
         e.stopPropagation();
         handleHit(target, e);
-    };
-    
-    // Touch event
-    target.ontouchstart = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const touch = e.touches[0];
-        handleHit(target, { clientX: touch.clientX, clientY: touch.clientY });
     };
     
     gameArea.appendChild(target);
@@ -483,7 +435,6 @@ function handleHit(target, e) {
     soundManager.hit(combo);
     createParticles(e.clientX, e.clientY);
     
-    const difficultySettings = getDifficultySettings();
     const settings = difficultySettings[difficultySelect.value];
     const timeBonus = Math.max(0, settings.timeout - reactionTime);
     const basePoints = Math.floor(10 + (timeBonus / 50));
@@ -513,19 +464,6 @@ function handleMiss(e) {
     if (!gameActive) return;
     if (e.target.classList.contains('target')) return;
     
-    processMiss(e.clientX, e.clientY);
-}
-
-function handleTouchMiss(e) {
-    if (!gameActive) return;
-    if (e.target.classList.contains('target')) return;
-    
-    e.preventDefault();
-    const touch = e.touches[0];
-    processMiss(touch.clientX, touch.clientY);
-}
-
-function processMiss(clientX, clientY) {
     soundManager.miss();
     
     misses++;
@@ -535,8 +473,8 @@ function processMiss(clientX, clientY) {
     updateCombo(false);
     
     const rect = gameArea.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     
     const missIndicator = document.createElement('div');
     missIndicator.className = 'miss-indicator';
@@ -591,7 +529,6 @@ function endGame() {
     }
     
     gameArea.onclick = null;
-    gameArea.ontouchstart = null;
     breakCombo(false);
     
     const accuracy = totalClicks > 0 ? Math.round((hits / totalClicks) * 100) : 0;
@@ -625,7 +562,7 @@ function endGame() {
             <div class="big-stat ${isNewRecord ? 'new-record' : ''}">${score}</div>
             <p>Toplam Skor</p>
         </div>
-        <div style="margin-top: 15px;">
+        <div style="margin-top: 20px;">
             <p>✅ İsabet: ${hits}/${totalClicks} (${accuracy}%)</p>
             <p>⚡ Ortalama Süre: ${avgTime}ms</p>
             <p>🚀 En Hızlı: ${bestTime}ms</p>
@@ -685,54 +622,7 @@ function resetGame() {
     difficultySelect.disabled = false;
     gameModeSelect.disabled = false;
     gameArea.onclick = null;
-    gameArea.ontouchstart = null;
 }
-
-// ==================== PENCERE YENİDEN BOYUTLAMA ====================
-let resizeTimeout;
-window.addEventListener('resize', () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(() => {
-        // Oyun aktifken hedefi yeniden konumlandır
-        if (gameActive && currentTarget) {
-            const rect = gameArea.getBoundingClientRect();
-            const targetRect = currentTarget.getBoundingClientRect();
-            
-            // Hedef sınırlar dışındaysa yeniden konumlandır
-            if (targetRect.right > rect.right || targetRect.bottom > rect.bottom) {
-                const difficultySettings = getDifficultySettings();
-                const settings = difficultySettings[difficultySelect.value];
-                const padding = settings.size;
-                const maxX = gameArea.offsetWidth - padding;
-                const maxY = gameArea.offsetHeight - padding - 20;
-                
-                let x = parseFloat(currentTarget.style.left);
-                let y = parseFloat(currentTarget.style.top);
-                
-                x = Math.min(x, maxX);
-                y = Math.min(y, maxY);
-                
-                currentTarget.style.left = x + 'px';
-                currentTarget.style.top = y + 'px';
-            }
-        }
-    }, 100);
-});
-
-// ==================== DOKUNMATIK EKRAN ZOOM ENGELİ ====================
-document.addEventListener('gesturestart', (e) => e.preventDefault());
-document.addEventListener('gesturechange', (e) => e.preventDefault());
-document.addEventListener('gestureend', (e) => e.preventDefault());
-
-// Çift dokunma zoom engellemek için
-let lastTouchEnd = 0;
-document.addEventListener('touchend', (e) => {
-    const now = Date.now();
-    if (now - lastTouchEnd <= 300) {
-        e.preventDefault();
-    }
-    lastTouchEnd = now;
-}, false);
 
 // Sayfa yüklendiğinde
 updateHighScoreBadge();

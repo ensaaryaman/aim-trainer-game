@@ -2,16 +2,14 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aim Trainer Pro</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>ðŸŽ¯</text></svg>">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>🎯 Aim Trainer Pro</h1>
+        <h1>ðŸŽ¯ Aim Trainer Pro</h1>
         
         <div class="stats">
             <div class="stat">
@@ -20,15 +18,15 @@
             </div>
             <div class="stat">
                 <span class="stat-value" id="time">30</span>
-                <span class="stat-label">Süre</span>
+                <span class="stat-label">SÃ¼re</span>
             </div>
             <div class="stat">
                 <span class="stat-value" id="accuracy">0%</span>
-                <span class="stat-label">İsabet</span>
+                <span class="stat-label">Ä°sabet</span>
             </div>
             <div class="stat">
                 <span class="stat-value" id="avgTime">0ms</span>
-                <span class="stat-label">Ort. Süre</span>
+                <span class="stat-label">Ort. SÃ¼re</span>
             </div>
             <div class="stat">
                 <span class="stat-value" id="maxCombo">0</span>
@@ -37,53 +35,49 @@
         </div>
 
         <div class="game-area" id="gameArea">
-            <div class="high-score-badge" id="highScoreBadge">👑 En İyi: 0</div>
+            <div class="high-score-badge" id="highScoreBadge">ðŸ‘‘ En Ä°yi: 0</div>
             <div class="combo-display" id="comboDisplay">0x KOMBO</div>
-            <div class="multiplier" id="multiplier">×1.0</div>
+            <div class="multiplier" id="multiplier">Ã—1.0</div>
             <div class="combo-bar-container" id="comboBarContainer">
                 <div class="combo-bar" id="comboBar"></div>
             </div>
             <div class="overlay" id="overlay">
-                <h2>🎯 Aim Trainer Pro</h2>
-                <p>Hedeflere mümkün olduğunca hızlı tıkla!</p>
-                <p>🔥 Üst üste vuruşlar = Kombo bonusu!</p>
-                <p>Oyunu başlatmak için aşağıdaki butona tıkla.</p>
+                <h2>ðŸŽ¯ Aim Trainer Pro</h2>
+                <p>Hedeflere mÃ¼mkÃ¼n olduÄŸunca hÄ±zlÄ± tÄ±kla!</p>
+                <p>ðŸ”¥ Ãœst Ã¼ste vuruÅŸlar = Kombo bonusu!</p>
+                <p>Oyunu baÅŸlatmak iÃ§in aÅŸaÄŸÄ±daki butona tÄ±kla.</p>
             </div>
         </div>
 
         <div class="controls">
-            <div class="select-row">
-                <div class="select-group">
-                    <label for="difficulty">Zorluk:</label>
-                    <select id="difficulty">
-                        <option value="easy">Kolay</option>
-                        <option value="medium" selected>Orta</option>
-                        <option value="hard">Zor</option>
-                        <option value="extreme">Ekstrem</option>
-                    </select>
-                </div>
-                <div class="select-group">
-                    <label for="gameMode">Mod:</label>
-                    <select id="gameMode">
-                        <option value="classic">Klasik</option>
-                        <option value="moving">Hareketli</option>
-                        <option value="chaos">Kaos</option>
-                    </select>
-                </div>
+            <div class="select-group">
+                <label for="difficulty">Zorluk:</label>
+                <select id="difficulty">
+                    <option value="easy">Kolay</option>
+                    <option value="medium" selected>Orta</option>
+                    <option value="hard">Zor</option>
+                    <option value="extreme">Ekstrem</option>
+                </select>
             </div>
-            <div class="button-row">
-                <button class="btn-start" id="startBtn" onclick="startGame()">Başlat</button>
-                <button class="btn-reset" onclick="resetGame()">Sıfırla</button>
-                <button class="btn-scores" onclick="showLeaderboard()">🏆</button>
-                <button class="btn-sound" id="soundBtn" onclick="toggleSound()">🔊</button>
+            <div class="select-group">
+                <label for="gameMode">Mod:</label>
+                <select id="gameMode">
+                    <option value="classic">Klasik</option>
+                    <option value="moving">Hareketli</option>
+                    <option value="chaos">Kaos</option>
+                </select>
             </div>
+            <button class="btn-start" id="startBtn" onclick="startGame()">BaÅŸlat</button>
+            <button class="btn-reset" onclick="resetGame()">SÄ±fÄ±rla</button>
+            <button class="btn-scores" onclick="showLeaderboard()">ðŸ† Skorlar</button>
+            <button class="btn-sound" id="soundBtn" onclick="toggleSound()">ðŸ”Š</button>
         </div>
     </div>
 
     <!-- Leaderboard Modal -->
     <div class="modal" id="leaderboardModal">
         <div class="modal-content">
-            <h2>🏆 En İyi Skorlar</h2>
+            <h2>ðŸ† En Ä°yi Skorlar</h2>
             <ul class="leaderboard-list" id="leaderboardList">
             </ul>
             <button class="close-modal" onclick="closeLeaderboard()">Kapat</button>

@@ -9,7 +9,7 @@ body {
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
     min-height: 100vh;
     color: #fff;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .container {
@@ -98,7 +98,8 @@ h1 {
 
 .game-area {
     position: relative;
-    width: 850px;
+    width: 100%;
+    max-width: 850px;
     height: 480px;
     background: linear-gradient(145deg, #0f0f23 0%, #1a1a3e 100%);
     border-radius: 15px;
@@ -523,4 +524,201 @@ button {
 @keyframes particleFade {
     0% { transform: scale(1); opacity: 1; }
     100% { transform: scale(0); opacity: 0; }
+}
+
+/* ==================== MOBİL UYUMLULUK ==================== */
+
+/* Tablet */
+@media screen and (max-width: 900px) {
+    .container {
+        padding: 10px;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .stats {
+        gap: 10px;
+    }
+    
+    .stat {
+        padding: 6px 12px;
+        min-width: 60px;
+    }
+    
+    .stat-value {
+        font-size: 1.2rem;
+    }
+    
+    .game-area {
+        height: 400px;
+    }
+}
+
+/* Mobil */
+@media screen and (max-width: 600px) {
+    .container {
+        padding: 8px;
+    }
+    
+    h1 {
+        font-size: 1.4rem;
+        margin-bottom: 5px;
+    }
+    
+    .stats {
+        gap: 5px;
+        margin-bottom: 6px;
+    }
+    
+    .stat {
+        padding: 5px 8px;
+        min-width: 50px;
+        border-radius: 8px;
+    }
+    
+    .stat-value {
+        font-size: 1rem;
+    }
+    
+    .stat-label {
+        font-size: 0.65rem;
+    }
+    
+    .game-area {
+        height: 55vh;
+        min-height: 280px;
+        max-height: 400px;
+        border-width: 2px;
+        border-radius: 10px;
+    }
+    
+    .combo-display {
+        font-size: 1.1rem;
+        top: 5px;
+        right: 5px;
+    }
+    
+    .multiplier {
+        top: 30px;
+        font-size: 0.85rem;
+    }
+    
+    .high-score-badge {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+    }
+    
+    .combo-bar-container {
+        width: 140px;
+        height: 5px;
+    }
+    
+    .overlay h2 {
+        font-size: 1.5rem;
+    }
+    
+    .overlay p {
+        font-size: 0.9rem;
+        padding: 0 15px;
+    }
+    
+    .final-stats .big-stat {
+        font-size: 2.2rem;
+    }
+    
+    .controls {
+        margin-top: 8px;
+        gap: 6px;
+    }
+    
+    button {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .select-group {
+        gap: 4px;
+    }
+    
+    .select-group label {
+        font-size: 0.75rem;
+    }
+    
+    .select-group select {
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+    
+    .countdown {
+        font-size: 3.5rem;
+    }
+}
+
+/* Küçük mobil */
+@media screen and (max-width: 380px) {
+    h1 {
+        font-size: 1.2rem;
+    }
+    
+    .stat {
+        padding: 4px 6px;
+        min-width: 45px;
+    }
+    
+    .stat-value {
+        font-size: 0.9rem;
+    }
+    
+    .game-area {
+        height: 50vh;
+        min-height: 240px;
+    }
+    
+    button {
+        padding: 7px 10px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Yatay mod */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+    .container {
+        padding: 5px;
+    }
+    
+    h1 {
+        font-size: 1.1rem;
+        margin-bottom: 3px;
+    }
+    
+    .stats {
+        margin-bottom: 4px;
+        gap: 6px;
+    }
+    
+    .stat {
+        padding: 3px 8px;
+    }
+    
+    .stat-value {
+        font-size: 0.9rem;
+    }
+    
+    .game-area {
+        height: 55vh;
+        min-height: 180px;
+    }
+    
+    .controls {
+        margin-top: 4px;
+    }
+    
+    button {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+    }
 }

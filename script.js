@@ -145,7 +145,7 @@ function saveHighScore(scoreData) {
 function updateHighScoreBadge() {
     const scores = getHighScores();
     const highScore = scores.length > 0 ? scores[0].score : 0;
-    highScoreBadge.textContent = `👑 En İyi: ${highScore}`;
+    highScoreBadge.textContent = '\uD83D\uDC51 En \u0130yi: ' + highScore;
 }
 
 function showLeaderboard() {
@@ -154,7 +154,7 @@ function showLeaderboard() {
     const scores = getHighScores();
 
     if (scores.length === 0) {
-        list.innerHTML = '<li class="no-scores">Henüz skor kaydedilmedi!</li>';
+        list.innerHTML = '<li class="no-scores">Hen\u00fcz skor kaydedilmedi!</li>';
     } else {
         list.innerHTML = scores.map((s, i) => `
             <li>
@@ -233,7 +233,7 @@ function getMultiplier() {
 function toggleSound() {
     soundManager.init();
     const enabled = soundManager.toggle();
-    soundBtn.textContent = enabled ? '🔊' : '🔇';
+    soundBtn.textContent = enabled ? '\uD83D\uDD0A' : '\uD83D\uDD07';
 }
 
 // ==================== PARÇACIK EFEKTİ ====================
@@ -557,16 +557,16 @@ function endGame() {
     }
     
     overlay.innerHTML = `
-        <h2>${isNewRecord ? '🎉 YENİ REKOR!' : '🏆 Oyun Bitti!'}</h2>
+        <h2>${isNewRecord ? '\uD83C\uDF89 YEN\u0130 REKOR!' : '\uD83C\uDFC6 Oyun Bitti!'}</h2>
         <div class="final-stats">
             <div class="big-stat ${isNewRecord ? 'new-record' : ''}">${score}</div>
             <p>Toplam Skor</p>
         </div>
         <div style="margin-top: 20px;">
-            <p>✅ İsabet: ${hits}/${totalClicks} (${accuracy}%)</p>
-            <p>⚡ Ortalama Süre: ${avgTime}ms</p>
-            <p>🚀 En Hızlı: ${bestTime}ms</p>
-            <p>🔥 Max Kombo: ${maxCombo}x</p>
+            <p>\u2705 \u0130sabet: ${hits}/${totalClicks} (${accuracy}%)</p>
+            <p>\u26A1 Ortalama S\u00fcre: ${avgTime}ms</p>
+            <p>\uD83D\uDE80 En H\u0131zl\u0131: ${bestTime}ms</p>
+            <p>\uD83D\uDD25 Max Kombo: ${maxCombo}x</p>
         </div>
     `;
     overlay.style.display = 'flex';
@@ -610,15 +610,15 @@ function resetGame() {
     breakCombo(false);
     
     overlay.innerHTML = `
-        <h2>🎯 Aim Trainer Pro</h2>
-        <p>Hedeflere mümkün olduğunca hızlı tıkla!</p>
-        <p>🔥 Üst üste vuruşlar = Kombo bonusu!</p>
-        <p>Oyunu başlatmak için aşağıdaki butona tıkla.</p>
+        <h2>\uD83C\uDFAF Aim Trainer Pro</h2>
+        <p>Hedeflere m\u00fcmk\u00fcn oldu\u011funca h\u0131zl\u0131 t\u0131kla!</p>
+        <p>\uD83D\uDD25 \u00dcst \u00fcste vuru\u015flar = Kombo bonusu!</p>
+        <p>Oyunu ba\u015flatmak i\u00e7in a\u015fa\u011f\u0131daki butona t\u0131kla.</p>
     `;
     overlay.style.display = 'flex';
     
     startBtn.disabled = false;
-    startBtn.textContent = 'Başlat';
+    startBtn.textContent = 'Ba\u015flat';
     difficultySelect.disabled = false;
     gameModeSelect.disabled = false;
     gameArea.onclick = null;

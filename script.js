@@ -1,82 +1,101 @@
 // ==================== SES SİSTEMİ ====================
-class SoundManager {
-    constructor() {
-        this.enabled = true;
-        this.audioContext = null;
-        this.initialized = false;
-    }
+// Ses sistemi degiskenleri
+let soundEnabled = true;
+let audioContext = null;
+let soundInitialized = false;
 
-    init() {
-        if (this.initialized) return;
-        try {
-            this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            this.initialized = true;
-        } catch (e) {
-            console.log('Audio not supported');
-        }
-    }
-
-    playTone(frequency, duration, type = 'sine', volume = 0.3) {
-        if (!this.enabled || !this.audioContext) return;
-        
-        const oscillator = this.audioContext.createOscillator();
-        const gainNode = this.audioContext.createGain();
-        
-        oscillator.connect(gainNode);
-        gainNode.connect(this.audioContext.destination);
-        
-        oscillator.frequency.value = frequency;
-        oscillator.type = type;
-        
-        gainNode.gain.setValueAtTime(volume, this.audioContext.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + duration);
-        
-        oscillator.start(this.audioContext.currentTime);
-        oscillator.stop(this.audioContext.currentTime + duration);
-    }
-
-    hit(combo = 1) {
-        const baseFreq = 600 + (combo * 50);
-        this.playTone(baseFreq, 0.1, 'sine', 0.25);
-        setTimeout(() => this.playTone(baseFreq * 1.5, 0.1, 'sine', 0.15), 50);
-    }
-
-    miss() {
-        this.playTone(200, 0.2, 'sawtooth', 0.15);
-    }
-
-    comboBreak() {
-        this.playTone(150, 0.3, 'square', 0.1);
-    }
-
-    countdown() {
-        this.playTone(440, 0.15, 'sine', 0.2);
-    }
-
-    countdownGo() {
-        this.playTone(880, 0.3, 'sine', 0.25);
-    }
-
-    gameOver() {
-        this.playTone(400, 0.2, 'sine', 0.2);
-        setTimeout(() => this.playTone(350, 0.2, 'sine', 0.2), 150);
-        setTimeout(() => this.playTone(300, 0.4, 'sine', 0.2), 300);
-    }
-
-    newRecord() {
-        const notes = [523, 659, 784, 1047];
-        notes.forEach((freq, i) => {
-            setTimeout(() => this.playTone(freq, 0.2, 'sine', 0.25), i * 100);
-        });
-    }
-
-    toggle() {
-        this.enabled = !this.enabled;
-        return this.enabled;
+// AudioContext'i baslat
+function initSound() {
+    if (soundInitialized) return;
+    try {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        soundInitialized = true;
+    } catch (e) {
+        console.log('Audio not supported');
     }
 }
 
-const soundManager = new SoundManager();
+// Temel ses uretme fonksiyonu
+function playTone(frequency, duration, type, volume) {
+    if (type === undefined) type = 'sine';
+    if (volume === undefined) volume = 0.3;
+    
+    if (!soundEnabled || !audioContext) return;
+    
+    var oscillator = audioContext.createOscillator();
+    var gainNode = audioContext.createGain();
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    
+    oscillator.frequency.value = frequency;
+    oscillator.type = type;
+    
+    gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+    
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + duration);
+}
+
+// Hedefe vurma sesi
+function playHitSound(combo) {
+    if (combo === undefined) combo = 1;
+    var baseFreq = 600 + (combo * 50);
+    playTone(baseFreq, 0.1, 'sine', 0.25);
+    setTimeout(function() {
+        playTone(baseFreq * 1.5, 0.1, 'sine', 0.15);
+    }, 50);
+}
+
+// Kacirma sesi
+function playMissSound() {
+    playTone(200, 0.2, 'sawtooth', 0.15);
+}
+
+// Kombo kirilma sesi
+function playComboBreakSound() {
+    playTone(150, 0.3, 'square', 0.1);
+}
+
+// Geri sayim sesi
+function playCountdownSound() {
+    playTone(440, 0.15, 'sine', 0.2);
+}
+
+// "GO!" sesi
+function playCountdownGoSound() {
+    playTone(880, 0.3, 'sine', 0.25);
+}
+
+// Oyun sonu sesi
+function playGameOverSound() {
+    playTone(400, 0.2, 'sine', 0.2);
+    setTimeout(function() {
+        playTone(350, 0.2, 'sine', 0.2);
+    }, 150);
+    setTimeout(function() {
+        playTone(300, 0.4, 'sine', 0.2);
+    }, 300);
+}
+
+// Yeni rekor sesi
+function playNewRecordSound() {
+    var notes = [523, 659, 784, 1047];
+    for (var i = 0; i < notes.length; i++) {
+        (function(index) {
+            setTimeout(function() {
+                playTone(notes[index], 0.2, 'sine', 0.25);
+            }, index * 100);
+        })(i);
+    }
+}
+
+// Ses ac/kapa
+function toggleSoundEnabled() {
+    soundEnabled = !soundEnabled;
+    return soundEnabled;
+}
 
 // ==================== OYUN DEĞİŞKENLERİ ====================
 let score = 0;
@@ -211,7 +230,7 @@ function updateCombo(hit) {
 
 function breakCombo(playSound = true) {
     if (combo > 3 && playSound) {
-        soundManager.comboBreak();
+        playComboBreakSound();
     }
     combo = 0;
     clearInterval(comboTimer);
@@ -231,8 +250,8 @@ function getMultiplier() {
 
 // ==================== SES KONTROLÜ ====================
 function toggleSound() {
-    soundManager.init();
-    const enabled = soundManager.toggle();
+    initSound();
+    var enabled = toggleSoundEnabled();
     soundBtn.textContent = enabled ? '\uD83D\uDD0A' : '\uD83D\uDD07';
 }
 
@@ -275,25 +294,25 @@ function createParticles(x, y) {
 
 // ==================== OYUN BAŞLATMA ====================
 function startGame() {
-    soundManager.init();
+    initSound();
     startBtn.disabled = true;
     difficultySelect.disabled = true;
     gameModeSelect.disabled = true;
     
-    let countdown = 3;
-    overlay.innerHTML = `<div class="countdown">${countdown}</div>`;
-    soundManager.countdown();
+    var countdown = 3;
+    overlay.innerHTML = '<div class="countdown">' + countdown + '</div>';
+    playCountdownSound();
     
-    const countdownInterval = setInterval(() => {
+    var countdownInterval = setInterval(function() {
         countdown--;
         if (countdown > 0) {
-            overlay.innerHTML = `<div class="countdown">${countdown}</div>`;
-            soundManager.countdown();
+            overlay.innerHTML = '<div class="countdown">' + countdown + '</div>';
+            playCountdownSound();
         } else {
             clearInterval(countdownInterval);
-            overlay.innerHTML = `<div class="countdown">GO!</div>`;
-            soundManager.countdownGo();
-            setTimeout(() => {
+            overlay.innerHTML = '<div class="countdown">GO!</div>';
+            playCountdownGoSound();
+            setTimeout(function() {
                 overlay.style.display = 'none';
                 beginGame();
             }, 500);
@@ -432,7 +451,7 @@ function handleHit(target, e) {
     reactionTimes.push(reactionTime);
     
     updateCombo(true);
-    soundManager.hit(combo);
+    playHitSound(combo);
     createParticles(e.clientX, e.clientY);
     
     const settings = difficultySettings[difficultySelect.value];
@@ -464,7 +483,7 @@ function handleMiss(e) {
     if (!gameActive) return;
     if (e.target.classList.contains('target')) return;
     
-    soundManager.miss();
+    playMissSound();
     
     misses++;
     totalClicks++;
@@ -551,9 +570,9 @@ function endGame() {
     const isNewRecord = scores[0].score === score && scores.filter(s => s.score === score).length === 1;
     
     if (isNewRecord) {
-        soundManager.newRecord();
+        playNewRecordSound();
     } else {
-        soundManager.gameOver();
+        playGameOverSound();
     }
     
     overlay.innerHTML = `

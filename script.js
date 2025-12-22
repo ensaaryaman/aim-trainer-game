@@ -629,7 +629,7 @@ function resetGame() {
     breakCombo(false);
     
     overlay.innerHTML = `
-        <h2>\uD83C\uDFAF Aim Trainer Pro</h2>
+        <h2>\uD83C\uDFAF Aim Trainer</h2>
         <p>Hedeflere m\u00fcmk\u00fcn oldu\u011funca h\u0131zl\u0131 t\u0131kla!</p>
         <p>\uD83D\uDD25 \u00dcst \u00fcste vuru\u015flar = Kombo bonusu!</p>
         <p>Oyunu ba\u015flatmak i\u00e7in a\u015fa\u011f\u0131daki butona t\u0131kla.</p>

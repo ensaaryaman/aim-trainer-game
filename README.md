@@ -2,7 +2,7 @@
 
 A browser-based aim trainer game built with vanilla JavaScript, HTML, and CSS. Test and improve your mouse accuracy with a combo system, sound effects, and a persistent leaderboard.
 
-**[▶ Play Now](https://ensaaryaman.github.io)**
+**[▶ Play Now](https://ensaaryaman.github.io/ensaryaman.github.io/)**
 
 ---
 

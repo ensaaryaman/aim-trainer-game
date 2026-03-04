@@ -28,7 +28,7 @@ A browser-based aim trainer game built with vanilla JavaScript, HTML, and CSS. T
 
 ### Play Online
 
-Visit **[https://ensaaryaman.github.io](https://ensaaryaman.github.io)** — no installation required.
+Visit **(https://ensaaryaman.github.io/ensaryaman.github.io/)** — no installation required.
 
 ### Run Locally
 
